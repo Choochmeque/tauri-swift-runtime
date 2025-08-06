@@ -9,10 +9,7 @@ This library provides the infrastructure to write and execute Swift plugins with
 ## Features
 
 - **Swift Plugin System**: Write native plugins in Swift that can be called from Tauri
-- **Automatic Method Discovery**: Plugins methods are automatically discovered and exposed
 - **Type-Safe Communication**: Bridge between Rust and Swift with proper type conversions
-- **WebView Integration**: Direct access to WKWebView for web content interaction
-- **Channel Support**: Event-based communication between Swift and JavaScript
 - **Platform Support**: Works on macOS (10.13+) and iOS (11+)
 
 ## Installation
