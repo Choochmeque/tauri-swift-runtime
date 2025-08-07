@@ -1,6 +1,6 @@
 use serde::de::DeserializeOwned;
 use swift_rs::SRString;
-use tauri::{ipc::Channel, plugin::PluginApi, AppHandle, Runtime};
+use tauri::{ipc::Channel, plugin::PluginApi, AppHandle, Manager, Runtime};
 
 use serde::Serialize;
 use serde_json::Value as JsonValue;
@@ -122,25 +122,27 @@ impl<R: Runtime, C: DeserializeOwned> PluginApiExt<R, C> {
     &self,
     init_fn: unsafe fn() -> *const std::ffi::c_void,
   ) -> Result<PluginHandleExt<R>, PluginInvokeError> {
-    // if let Some(webview) = self.app().manager.webviews().values().next() {
-    //   let (tx, rx) = channel();
-    //   let name = self.name();
-    //   let config = self.raw_config().clone();
-    //   webview
-    //     .with_webview(move |w| {
-    //       unsafe {
-    //         crate::macos::swift_register_plugin(
-    //           &name.into(),
-    //           init_fn(),
-    //           &serde_json::to_string(&config).unwrap().as_str().into(),
-    //           w.inner() as _,
-    //         )
-    //       };
-    //       tx.send(()).unwrap();
-    //     })
-    //     .map_err(|_| PluginInvokeError::UnreachableWebview)?;
-    //   rx.recv().unwrap();
-    // } else {
+    if let Some(webview) = self.app().webviews().values().next() {
+      let (tx, rx) = channel();
+      let name = self.name();
+      let config = self.raw_config().clone();
+      let name = name.to_string();
+      let config = serde_json::to_string(&config).unwrap();
+      webview
+        .with_webview(move |w| {
+          unsafe {
+            crate::macos::swift_register_plugin(
+              &SRString::from(name.as_str()),
+              init_fn(),
+              &serde_json::to_string(&config).unwrap().as_str().into(),
+              w.inner() as _,
+            )
+          };
+          tx.send(()).unwrap();
+        })
+        .map_err(|_| PluginInvokeError::UnreachableWebview)?;
+      rx.recv().unwrap();
+    } else {
       unsafe {
         crate::macos::swift_register_plugin(
           &SRString::from(self.name()),
@@ -152,7 +154,7 @@ impl<R: Runtime, C: DeserializeOwned> PluginApiExt<R, C> {
           std::ptr::null(),
         )
       };
-    //}
+    }
 
     Ok(PluginHandleExt {
       name: self.name().to_string(),

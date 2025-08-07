@@ -179,7 +179,7 @@ func registerPlugin(name: SRString, plugin: NSObject, config: SRString, webview:
   )
 }
 
-@_cdecl("swift_on_webview_created")
+@_cdecl("on_webview_created")
 func onWebviewCreated(webview: WKWebView, viewController: NSObject) {
   #if os(iOS)
   if let vc = viewController as? UIViewController {

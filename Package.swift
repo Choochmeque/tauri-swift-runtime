@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 // Copyright 2019-2024 Tauri Programme within The Commons Conservancy
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
@@ -8,8 +8,8 @@ import PackageDescription
 let package = Package(
   name: "TauriSwiftRuntime",
   platforms: [
-    .macOS(.v10_13),
-    .iOS(.v11),
+    .macOS(.v13),
+    .iOS(.v15),
   ],
   products: [
     // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -20,7 +20,7 @@ let package = Package(
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
-    .package(name: "SwiftRs", url: "https://github.com/Brendonovich/swift-rs", from: "1.0.0")
+    .package(url: "https://github.com/Brendonovich/swift-rs", from: "1.0.0")
   ],
   targets: [
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -28,7 +28,7 @@ let package = Package(
     .target(
       name: "TauriSwiftRuntime",
       dependencies: [
-        .byName(name: "SwiftRs")
+        .product(name: "SwiftRs", package: "swift-rs")
       ],
       path: "src-swift/Sources"
     ),
