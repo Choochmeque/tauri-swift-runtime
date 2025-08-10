@@ -246,7 +246,7 @@ pub(crate) fn run_command<R: Runtime, C: AsRef<str>, F: FnOnce(PluginResponse) +
             });
           }
           Err(err) => {
-            handler(Err(format!("{err}, data: {}", json).into()));
+            handler(Err(format!("{err}, data: {json}").into()));
           }
         }
       }
