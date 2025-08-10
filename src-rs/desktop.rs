@@ -116,6 +116,7 @@ impl<R: Runtime, C: DeserializeOwned> PluginApiExt<R, C> {
   }
 }
 
+#[cfg(any(target_os = "macos", target_os = "ios"))]
 impl<R: Runtime, C: DeserializeOwned> PluginApiExt<R, C> {
   /// Registers a Swift plugin.
   pub fn register_swift_plugin(
