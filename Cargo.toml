@@ -4,6 +4,8 @@ description = "A runtime layer for executing Swift code in Tauri plugins on macO
 keywords = ["tauri", "swift", "runtime", "ffi", "macos", "ios"]
 version = "0.1.2"
 edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Choochmeque/tauri-swift-runtime"
 
 [lib]
 path = "src-rs/lib.rs"
