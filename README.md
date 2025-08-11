@@ -1,3 +1,5 @@
+![Crates.io Version](https://img.shields.io/crates/v/tauri-swift-runtime)
+
 # Tauri Swift Runtime
 
 A Swift runtime bridge for Tauri applications, enabling native Swift plugin development for macOS and iOS.
