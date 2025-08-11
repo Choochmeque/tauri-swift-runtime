@@ -22,7 +22,7 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-tauri-swift-runtime = "0.1.0"
+tauri-swift-runtime = "0.1"
 ```
 
 ### Swift Side
